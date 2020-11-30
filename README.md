@@ -1,1 +1,1 @@
-This is the repo for my personal Web Development projects :)
+This is the group project of Team#15 for CS5610.
