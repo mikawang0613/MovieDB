@@ -2,7 +2,7 @@ var mongoose=require("mongoose");
 
 var movieSchema = new mongoose.Schema({
 	name:String,
-    price:String,
+    genere:String,
 	image:String,
 	description:String,
 	author:{
