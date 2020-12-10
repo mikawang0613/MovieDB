@@ -17,7 +17,7 @@ router.get("/movies",function(req,res){
 
 router.post("/movies",middleware.isLoggedIn,function(req,res){
 	var name = req.body.name;
-	var price=req.body.price;
+	var genere =req.body.genere;
 	var image = req.body.image;
 	var description = req.body.description
 	var author={

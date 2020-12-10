@@ -1,12 +1,10 @@
 <% include partial/header %>
 
-
-
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
 			<p class="lead">
-				YelpCamp
+				Movie DB
 			</p>
 			<div class="list-group">
 				<li class="list-group-item active">Info 1</li>
@@ -19,7 +17,7 @@
 				<img class= "img-responsive" src="<%=movie.image%>">
 				<div class="caption-full">
 					<h4 class="float-right">
-						    $<%=movie.price%>/night
+						<%=movie.genere%>
 					</h4>
 					<h4>
 					  <a><%=movie.name%></a>
@@ -42,7 +40,6 @@
 				<div class="text-right">
 				 <a class="btn btn-success" href="/movie/<%=movie._id%>/comments/new">Add New Comment</a>	
 				</div>
-				
 				<hr>
 				<% movie.comments.forEach(function(comment){ %>
 				    <div class="row">
