@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Campground=require("../model/movie");
 var middleware=require("../middleware/index.js");
+const { render } = require("ejs");
 
 
 //INDEX - show all movies
@@ -37,6 +38,10 @@ router.post("/movies",middleware.isLoggedIn,function(req,res){
 
 router.get("/movie/new",middleware.isLoggedIn,function(req,res){
 	res.render("new.ejs")
+})
+
+router.get("/movie",function(req,res){
+	res.render("movie.ejs")
 })
 
 

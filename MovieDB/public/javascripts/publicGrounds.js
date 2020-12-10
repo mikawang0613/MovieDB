@@ -33,5 +33,60 @@ function getMovies(searchText){
 	});
 }
 
+function movieSelected(id){
+	sessionStorage.setItem('movieId',id)
+	window.location.assign("movie");
+	return false;
+}
 
-module.exports = router;
+function getMovie(){
+	let movieId = sessionStorage.getItem("movieId");
+
+	axios.get('https://api.themoviedb.org/3/movie/' + movieId + '?api_key=838cc1c9e302f1b74485c014c60dd197')
+	.then((response)=>{
+		console.log(response);
+		let movie = response.data;
+
+		let output = `
+		 <h2>${movie.title} </h2>
+		<div class = "container movie-page">
+			<div class = "row">
+			<div class = "col-md-4">
+			<img src = 'https://image.tmdb.org/t/p/w200/${movie.poster_path}' class="thumbnail">
+			</div>
+			<div class = "col-md-8">
+			<ul class="list-group bg-dark text-white">
+			<li class = "list-group-item bg-dark">
+			<strong>Genre:</strong>
+		`
+
+			for(var i = 0; i < 2; i++){
+				output += `
+				${movie.genres[i].name} , 
+				`
+				output+=`${movie.genres[2].name}`
+			};
+
+		output += `
+		</li>
+		<li class="list-group-item bg-dark"><strong>Released:</strong> ${movie.release_date}</li>
+		<li class="list-group-item  bg-dark"><strong>Rating:</strong> ${movie.vote_average} / 10</li>
+		</ul>
+		<hr class = "bg-dark">
+
+		<a href = ${movie.homepage} class = "btn btn-secondary"> View movie </a>
+		<a href="/search" class="btn btn-primary">Back to search</a>
+		</div>
+		<p>${movie.overview} </p>
+		</div>
+		`;
+
+		$('#movie').html(output)
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+}
+
+
+// module.exports = router;
