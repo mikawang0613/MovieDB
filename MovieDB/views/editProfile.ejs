@@ -1,0 +1,49 @@
+<% include partial/header %>
+<div class="container">
+    <h1 style="text-align: center;">Edit Profile</h1>
+    <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" type="text" id="username" name="user[username]" value="<%= user.username %>" required />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" type="password" id="password" name="user[password]" value="<%= user.password %>" required />
+        </div>
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input class="form-control" type="text" name="user[firstName]" value="<%= user.firstName %>" autocomplete="off" required />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" type="text" name="user[lastName]" value="<%= user.lastName %>" autocomplete="off" required />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="email" id="email" name="user[email]" value="<%= user.email %>" required />
+        </div>
+
+        <div class="form-group">
+            <label for="role">IsAdmin? </label>
+            <input class="form-control" type="text" id="role" name="user[role]" value="<%= user.isAdmin %>" required />
+        </div>
+        <div class="form-group">
+            <label for="favoriteGenres">Favorite Movie Genres </label>
+            <input class="form-control" type="text" id="role" name="user[favoriteGenres]" value="<%= user.favoriteGenres %>" required />
+        </div>
+
+        <div class="form-group">
+            <label for="avatar">Profile Photo</label>
+            <input class="form-control" type="text" name="user[avatar]" value="<%= user.avatar %>"/>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-md btn-primary btn-block">Update Profile</button>
+        </div>
+        <hr>
+        <a href="/users/<%= user._id %>">Back</a>
+    </form>
+
+
+</div>
+<% include partial/footer %>

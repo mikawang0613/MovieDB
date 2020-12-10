@@ -16,6 +16,7 @@ mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  us
 
 var commentRoutes = require("./routes/comments"),
 	movieRoutes = require("./routes/movies"),
+	userRoute = require("./routes/user"),
 	indexRoutes = require("./routes/index")
 
 app.set("view engine","ejs");
@@ -48,6 +49,7 @@ app.use(function(req,res,next){
 app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(movieRoutes);
+app.use(userRoute);
 
 app.listen(3000, function(){
  console.log("App listening on port 3000!");

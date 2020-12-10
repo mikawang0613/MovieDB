@@ -1,32 +1,33 @@
-const express    = require("express"),
-    router     = express.Router(),
-    User       = require("../models/user"),
-    Campground = require("../models/movies"),
-    middleware = require("../middleware");
+const express = require("express");
+const router = express.Router();
+const User = require("../model/user");
+const Campground = require("../model/movie");
+const middleware = require("../middleware");
+
 
 // User profile
-router.get("/:id", middleware.isLoggedIn, (req, res) => {
+router.get("/users/:id", middleware.isLoggedIn, (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
         if (err || !foundUser) {
             req.flash("error", "Something went wrong...");
-            res.redirect("/campgrounds");
+            res.redirect("/movies");
         } else {
             Campground.find().where("author.id").equals(foundUser._id).exec((err, campgrounds) => {
                 if (err) {
                     req.flash("error", "Something went wrong...");
-                    res.redirect("/campgrounds");
-                } else { res.render("users/show", { user: foundUser, campgrounds }); }
+                    res.redirect("/movies");
+                } else { res.render("profile", { currentUser: foundUser, campgrounds }); }
             });
         }
     });
 });
 
 // show edit form
-router.get("/:id/edit", middleware.isLoggedIn, (req, res) => {
+router.get("/users/:id/edit", middleware.isLoggedIn, (req, res) => {
     User.findById(req.params.id, (err, foundUser) => {
         if (err || !foundUser) { return res.redirect("back"); }
         if (foundUser._id.equals(req.user._id)) {
-            res.render("users/edit", { user: foundUser });
+            res.render("editProfile", { user: foundUser });
         } else {
             req.flash("error", "You don't have permission to do that");
             res.redirect("back");
@@ -35,7 +36,7 @@ router.get("/:id/edit", middleware.isLoggedIn, (req, res) => {
 });
 
 // update profile
-router.put("/:id", middleware.isLoggedIn, (req, res) => {
+router.put("/users/:id", middleware.isLoggedIn, (req, res) => {
     User.findByIdAndUpdate(req.params.id, req.body.user, (err, updatedUser) => {
         if (err) {
             if (err.name === 'MongoError' && err.code === 11000) {

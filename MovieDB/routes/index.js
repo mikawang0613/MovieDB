@@ -1,36 +1,36 @@
-
 var express = require("express");
 var router = express.Router();
 var flash=require("connect-flash");
 var passport=require("passport");
 var User = require("../model/user");
 
-
+//AUTH ROUTES
 router.get("/", function(req,res){
-	res.render("landing");
+    res.render("landing");
 });
 
-
-
-//AUTH ROUTES
-
-// show register formmon
+// show register form
 router.get("/register", function(req, res){
    res.render("register"); 
 });
+
 //handle sign up logic
-router.post("/register", function(req, res){
-    var newUser = new User({username: req.body.username});
+router.post("/register",  async (req, res) => {
+    const { email, username, password, favoriteGenres, lastName, firstName, avatar, role } = req.body;
+    const isAdmin = role ==='Admin'
+    const newUser = new User({ email, username, password, favoriteGenres, lastName, firstName, avatar, isAdmin});
+    console.log(newUser);
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error",err.message);
             return res.render("register");
         }
         passport.authenticate("local")(req, res, function(){
-			req.flash("success","Welcome to YelpCamp" + user.username);
-           res.redirect("/movies"); 
+			req.flash("success","Welcome to MovieDB " + user.username);
+           res.redirect("/movies");
         });
     });
+
 });
 
 // show login form
