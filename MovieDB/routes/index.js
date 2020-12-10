@@ -19,7 +19,6 @@ router.post("/register",  async (req, res) => {
     const { email, username, password, favoriteGenres, lastName, firstName, avatar, role } = req.body;
     const isAdmin = role ==='Admin'
     const newUser = new User({ email, username, password, favoriteGenres, lastName, firstName, avatar, isAdmin});
-    console.log(newUser)
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error",err.message);
