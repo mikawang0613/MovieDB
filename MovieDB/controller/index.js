@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 var flash=require("connect-flash");
 var passport=require("passport");
-var User = require("../model/user");
+var User = require("../schema/userSchema");
+var apiComment = require("../schema/apiSchema")
 
 //AUTH ROUTES
 router.get("/", function(req,res){
@@ -57,6 +58,25 @@ router.get("/logout", function(req, res){
 router.get("/search", function(req, res){
     res.render("search"); 
 });
+
+//post comment on search
+router.get("/apicomment",function(req,res){
+    res.render("apicomment")
+})
+
+router.post("/apicomment/:id",function(req,res){
+    apiComment.create(req.body.comment,function(err,comment){
+        if(err){
+            console.log(err);
+        }else{
+            comment.text = req.body.comment;
+            comment.save()
+            movie.comments.push(comment)
+            req.flash("success","Successfully added comment");
+            res.redirect('/movie');
+        }
+    })
+})
 
 
 module.exports = router;

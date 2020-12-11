@@ -79,14 +79,56 @@ function getMovie(){
 		</div>
 		<p>${movie.overview} </p>
 		</div>
+
+		<a onClick="commentSelected('${movie.title}')" class = "btn btn-primary" href = "#"> Add comment </a>
 		`;
 
 		$('#movie').html(output)
 	})
 	.catch((err) => {
 		console.log(err);
-	});
-}
+		});
+	}
 
 
-// module.exports = router;
+	function commentSelected(title){
+		sessionStorage.setItem('commentTitle',title)
+		window.location.assign("apicomment");
+		return false;
+	}
+
+	function createCommentForApi(){
+		let movieTitle = sessionStorage.getItem("commentTitle");
+		let movieId = sessionStorage.getItem("movieId");
+
+		let output = `
+		<div class = "container">
+		<h2 style="text-align:center">Add Comment for ${movieTitle}</h2>
+		<div style ="width:50%; margin:25px auto;">
+		<form action="/apicomment/${movieId}" method="post">
+		<div class="form-group">
+		<div class="form-group">
+			<input class="form-control" type="text" name="comment[text]" placeholder = "text" autocomplete="off" required />
+		</div>
+		<div class="form-group">
+		<a href = "/movie/${movieId}" class = "btn btn-primary">
+			Submit!
+		</a>
+		</div>
+		</div>
+		</form>
+		<a href="/movie"> Back </a>
+		</div>
+		</div>
+		`
+		$('#comments').html(output);
+
+	}
+
+
+	// function commentForMovie(){
+	// 	// sessionStorage.setItem('movieId',id)
+	// 	window.location.assign("apicomment");
+	// 	return false;
+	// }
+

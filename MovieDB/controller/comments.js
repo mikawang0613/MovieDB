@@ -1,24 +1,25 @@
 var express = require("express");
 var router = express.Router();
-var Campground = require("../model/movie");
-var Comment = require("../model/comment");
+var Movie = require("../schema/movieSchema");
+var Comment = require("../schema/commentSchema");
 var middleware=require("../middleware/index.js");
 
 
 
 router.get("/movie/:id/comments/new",middleware.isLoggedIn,function(req,res){
-	Campground.findById(req.params.id,function(err,movie){
+	Movie.findById(req.params.id,function(err,movie){
 		if(err){
 			console.log(err);
 		}else{
-			res.render("newone",{movie:movie});
+			res.render("addComment",{movie:movie});
 		}
 	});
 });
 
+
 router.post("/movie/:id/comments",middleware.isLoggedIn, function(req, res){
    //lookup movie using ID
-   Campground.findById(req.params.id, function(err, movie){
+   Movie.findById(req.params.id, function(err, movie){
        if(err){
            console.log(err);
            res.redirect("/movies");
@@ -42,10 +43,13 @@ router.post("/movie/:id/comments",middleware.isLoggedIn, function(req, res){
         });
        }
    });
-   
-   //connect new comment to movie
-   //redirect movie show page
 });
+
+//comment for api 
+
+// router.get("/movie/:id/api/comment",function(req,res){
+// 	res.send("hello")
+// })
 
 
 //Comment edit route
@@ -73,7 +77,6 @@ router.put("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership,fu
 
 //Comment destroy route
 router.delete("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership,function(req,res){
-	console.log(">>>>>>>>>>>> comment delete")
 	Comment.findByIdAndRemove(req.params.comment_id,function(err){
 		if(err){
 			res.redirect("back");

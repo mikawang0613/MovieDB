@@ -1,13 +1,13 @@
 var express = require("express");
 var router = express.Router();
-var Campground=require("../model/movie");
+var Movie=require("../schema/movieSchema");
 var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
 
 
 //INDEX - show all movies
 router.get("/movies",function(req,res){
-	Campground.find({},function(err,allCampground){
+	Movie.find({},function(err,allCampground){
 		if(err){
 			console.log(err);
 		}else{
@@ -18,15 +18,15 @@ router.get("/movies",function(req,res){
 
 router.post("/movies",middleware.isLoggedIn,function(req,res){
 	var name = req.body.name;
-	var genere =req.body.genere;
+	// var genere =req.body.genere;
 	var image = req.body.image;
 	var description = req.body.description
 	var author={
 		id:req.user._id,
 		username:req.user.username
 	}
-	var newCampground = {name:name,image:image,description:description,author:author};
-	Campground.create(newCampground,function(err,newlyCreated){
+	var newMovie= {name:name,image:image,description:description,author:author};
+	Movie.create(newCampground,function(err,newMovie){
 		if(err){
 		   console.log(err);
 		   }else{
@@ -45,11 +45,11 @@ router.get("/movie",function(req,res){
 })
 
 
-//SHOW -show more info about one campround
+//SHOW -show more info about one movie
 router.get("/movie/:id",function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> get");
 	//find the movie with provided ID
-	Campground.findById(req.params.id).populate("comments").exec(function(err,foundCampground){
+	Movie.findById(req.params.id).populate("comments").exec(function(err,foundCampground){
 		if(err){
 			console.log(err);
 		}else{
@@ -62,7 +62,7 @@ router.get("/movie/:id",function(req,res){
 //EDIT
 router.get("/movie/:id/edit",middleware.checkCampgroundOwnership,function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> edit");
-	Campground.findById(req.params.id,function(err,findCampground){
+	Movie.findById(req.params.id,function(err,findCampground){
 		res.render("edit",{movie:findCampground});
 	});
 	
@@ -71,7 +71,7 @@ router.get("/movie/:id/edit",middleware.checkCampgroundOwnership,function(req,re
 
 router.put("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> put");
-	Campground.findByIdAndUpdate(req.params.id,req.body.movie,function(err,UpdateCampground){
+	Movie.findByIdAndUpdate(req.params.id,req.body.movie,function(err,UpdateCampground){
 		if(err){
 			res.redirect("/movies");
 		}else{
@@ -84,7 +84,7 @@ router.put("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
 //Destroy Campground
 router.delete("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> delete");
-	Campground.findByIdAndRemove(req.params.id,function(err){
+	Movie.findByIdAndRemove(req.params.id,function(err){
 		if(err){
 			res.redirect("/movies");
 		}else{

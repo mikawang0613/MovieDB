@@ -1,6 +1,6 @@
 //all the middleware goes here 
-var Campground=require("../model/movie.js");
-var Comment=require("../model/comment.js");
+var Campground=require("../schema/movieSchema.js");
+var Comment=require("../schema/commentSchema.js");
 var middlewareObj={};
 
 middlewareObj.checkCampgroundOwnership=function(req,res,next){
