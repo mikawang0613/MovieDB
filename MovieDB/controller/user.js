@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../model/user");
-const Campground = require("../model/movie");
+const User = require("../schema/userSchema");
+const Campground = require("../schema/movieSchema");
 const middleware = require("../middleware");
 
 

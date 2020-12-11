@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
-var Campground = require("./model/movie");
-var Comment   = require("./model/comment");
+var Campground = require("./schema/movieSchema");
+var Comment   = require("./schema/commentSchema");
  
 var data = [
     {
@@ -54,10 +54,10 @@ function seedDB(){
                         //create a comment
                         Comment.create(
                             {
-                                text: "This place is great, but I wish there was internet",
+                                text: "Best movie of the year",
                                 author:{
                                     id : "588c2e092403d111454fff76",
-                                    username: "Jack"
+                                    username: "Movie Lover"
                                 }
                             }, function(err, comment){
                                 if(err){

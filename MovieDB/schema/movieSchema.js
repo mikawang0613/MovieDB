@@ -2,7 +2,7 @@ var mongoose=require("mongoose");
 
 var movieSchema = new mongoose.Schema({
 	name:String,
-    genere:String,
+    genre:String,
 	image:String,
 	description:String,
 	author:{
@@ -20,4 +20,4 @@ var movieSchema = new mongoose.Schema({
 	]
 });
 
-module.exports = mongoose.model("Campground",movieSchema);
+module.exports = mongoose.model("movieSchema",movieSchema);

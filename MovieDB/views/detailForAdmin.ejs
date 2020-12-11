@@ -14,13 +14,11 @@
 				<li class="list-group-item">Info 3</li>
 			</div>
 		</div>
+		
 		<div class="col-md-9">
 			<div class="thumbnail">
 				<img class= "img-responsive" src="<%=movie.image%>">
 				<div class="caption-full">
-					<h4 class="float-right">
-						    $<%=movie.price%>/night
-					</h4>
 					<h4>
 					  <a><%=movie.name%></a>
 					 </h4> 
@@ -30,6 +28,7 @@
 					<p>
 						<em>Submitted by<%=movie.author.username%></em>
 					</p>
+					
 					<% if(currentUser && movie.author.id.equals(currentUser.id)){ %>
 					<a class="btn btn-warning" href="/movie/<%=movie._id%>/edit">Edit</a>	
 					<form class="delete-form" action="/movie/<%=movie._id%>?_method=DELETE" method="POST">

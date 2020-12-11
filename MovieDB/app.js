@@ -6,18 +6,18 @@ var flash=require("connect-flash");
 var passport=require("passport");
 var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
-var Campground=require("./model/movie");
+var movie=require("./schema/movieSchema");
 var seedDB=require("./seeds");
-var Comment=require("./model/comment");
-var User=require("./model/user")
+var Comment=require("./schema/commentSchema");
+var User=require("./schema/userSchema")
 
 seedDB();
 mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  useNewUrlParser: true });
 
-var commentRoutes = require("./routes/comments"),
-	movieRoutes = require("./routes/movies"),
-	userRoute = require("./routes/user"),
-	indexRoutes = require("./routes/index")
+var commentRoutes = require("./controller/comments"),
+	movieRoutes = require("./controller/movies"),
+	userRoute = require("./controller/user"),
+	indexRoutes = require("./controller/index")
 
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -28,7 +28,7 @@ app.use(flash());
 
 //PASSPORT CONFIGURATION
 app.use(require("express-session")({
-	secret:"Once again Rusty wins the cutest dog!",
+	secret:"What's our team number",
 	resave:false,
 	saveUninitialized:false
 }));
