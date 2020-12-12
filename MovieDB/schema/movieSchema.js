@@ -20,4 +20,4 @@ var movieSchema = new mongoose.Schema({
 	]
 });
 
-module.exports = mongoose.model("movies",movieSchema);
+module.exports = mongoose.model("movieSchema",movieSchema);
