@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-var mongoose=require("mongoose");
+// var mongoose=require("mongoose");
 var flash=require("connect-flash");
 var passport=require("passport");
 var LocalStrategy = require("passport-local");
@@ -12,7 +12,12 @@ var Comment=require("./schema/commentSchema");
 var User=require("./schema/userSchema")
 
 seedDB();
-mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  useNewUrlParser: true });
+
+
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://amanda:woaics5610@cluster0.cage7.mongodb.net/moviedb?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 var commentRoutes = require("./controller/comments"),
 	movieRoutes = require("./controller/movies"),
