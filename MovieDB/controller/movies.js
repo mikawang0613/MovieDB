@@ -26,7 +26,7 @@ router.post("/movies",middleware.isLoggedIn,function(req,res){
 		username:req.user.username
 	}
 	var newMovie= {name:name,image:image,description:description,author:author};
-	Movie.create(newCampground,function(err,newMovie){
+	Movie.create(newMovie,function(err,newlyCreated){
 		if(err){
 		   console.log(err);
 		   }else{
