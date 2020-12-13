@@ -26,7 +26,7 @@
 	                  <%=movie.description%>
                     </p>
 					<p>
-						<em>Submitted by<%=movie.author.username%></em>
+						<em>Submitted by<a href="/users/<%= movie.author.id %>"><%=movie.author.username%></a></em>
 					</p>
 					<% if(currentUser && movie.author.id.equals(currentUser.id)){ %>
 					<a class="btn btn-warning" href="/movie/<%=movie._id%>/edit">Edit</a>	
@@ -44,7 +44,7 @@
 				<% movie.comments.forEach(function(comment){ %>
 				    <div class="row">
 						<div class="col-md-12">
-						  <Strong><%= comment.author.username %></Strong>
+						  <Strong><a href="/users/<%= comment.author.id %>"><%=comment.author.username%></a></Strong>
 						  <span class="float-right">10 days ago</span>
 							<p>
 							  <%=comment.text%>
