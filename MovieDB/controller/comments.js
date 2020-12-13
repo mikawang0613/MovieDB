@@ -2,7 +2,11 @@ var express = require("express");
 var router = express.Router();
 var Movie = require("../schema/movieSchema");
 var Comment = require("../schema/commentSchema");
+var ApiComment = require("../schema/apiSchema");
 var middleware=require("../middleware/index.js");
+var mongoose = require('mongoose'); 
+var Schema = mongoose.Schema; 
+var ObjectId = Schema.ObjectId;
 
 
 
@@ -18,8 +22,8 @@ router.get("/movie/:id/comments/new",middleware.isLoggedIn,function(req,res){
 
 
 router.post("/movie/:id/comments",middleware.isLoggedIn, function(req, res){
-   //lookup movie using ID
-   Movie.findById(req.params.id, function(err, movie){
+    //lookup movie using ID
+    Movie.findById(req.params.id, function(err, movie){
        if(err){
            console.log(err);
            res.redirect("/movies");
@@ -74,7 +78,6 @@ router.put("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership,fu
 	});
 });
 
-
 //Comment destroy route
 router.delete("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership,function(req,res){
 	Comment.findByIdAndRemove(req.params.comment_id,function(err){
@@ -85,6 +88,36 @@ router.delete("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership
 			res.redirect("/movie/" + req.params.id)
 		}
 	});
+});
+
+router.post("/apicomment/:id/comment",function(req,res){
+	var movieId = req.params.id
+	console.log("xxxxxxxxxxxx post movieId: " + movieId);
+
+	ApiComment.create({_id: movieId}, function(err, apicomment){
+		if(err){
+			console.log(err);
+		} else {
+			//add username and id to comment
+			//comment.author = req.user
+			// comment.author.id = req.user._id;
+			// comment.author.username = req.user.username;
+			//save comment
+			apicomment.comments.push(req.body.comment)
+			apicomment.save();
+			res.redirect('/movie');
+		}
+	 });
+	//res.redirect()
+	
+	// ApiComment.findById(movieid, function(err, comments){
+	// 	if(err){
+	// 		res.redirect("/search");
+	// 	} else {
+			
+	// 	}
+	// })
+	
 });
 
 

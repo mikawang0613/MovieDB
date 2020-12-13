@@ -10,6 +10,9 @@ var movie=require("./schema/movieSchema");
 // var seedDB=require("./seeds");
 var Comment=require("./schema/commentSchema");
 var User=require("./schema/userSchema")
+var cors = require('cors')
+app.use(cors())
+
 
 // seedDB();
 // mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  useNewUrlParser: true });

@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 var Movie=require("../schema/movieSchema");
+var ApiComment = require("../schema/apiSchema");
 var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
+var pickedMovieId = "";
 
 
 //INDEX - show all movies
@@ -43,6 +45,23 @@ router.get("/movie/new",middleware.isLoggedIn,function(req,res){
 router.get("/movie",function(req,res){
 	res.render("movie.ejs")
 })
+
+router.get("/moviepicked/:id",function(req,res){
+	console.log("xxxxxxxxxxxxxxxxxxx moviepicked:"+req.params.id);
+	pickedMovieId = req.params.id;
+	ApiComment.findById(req.params.id).exec(function(err,foundMovie){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("xxxxxxxxxxxxxxx foundMovie:");
+			console.log(foundMovie);
+			res.send(foundMovie.comments);
+	   }
+	});
+	// comments = ApiComment.findById(movieId);
+	// res.send(comments);
+	// res.send("weiran");
+});
 
 
 //SHOW -show more info about one movie
