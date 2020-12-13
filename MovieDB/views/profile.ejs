@@ -10,25 +10,23 @@
                    My email: <div class="caption"><a href="mailto:<%= user.email %>"><%= user.email %></a></div>
                 </div>
                 <div class="row ml-1">
-                    My Favorite Movie Genres: <%= user.favoriteGenres %></div>
+                    My Favorite Movie Genres: <%= user.favoriteGenres %>
                 </div>
             </div>
+        </div>
         <div class="col-8">
             <a href="/users/<%= user._id%>/edit">Edit Profile</a>
             <h3><%= user.username %>'s Movies</h3>
             <% movies.forEach(movie => { %>
-            <div class="row">
-                        <div class="col-md-4">
-                            <div class="thumbnail card">
-                                <img src="<%= movie.image %>" alt="<%= movie.name %>">
-                                <div class="caption">
-                                    <h4 class="caption"><a href="/movie/<%= movie.id %>"><%= movie.name %></a></h4>
-                                </div>
-                            </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="thumbnail card">
+                        <img src="<%= movie.image %>" alt="<%= movie.name %>">
+                        <div class="caption">
+                            <h4 class="caption"><a href="/movie/<%= movie.id %>"><%= movie.name %></a></h4>
                         </div>
-            </div>
+                    </div>
+                </div>
             <% }); %>
-
             </ul>
         </div>
     </div>
