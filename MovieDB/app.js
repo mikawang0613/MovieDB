@@ -23,6 +23,8 @@ var commentRoutes = require("./controller/comments"),
 	movieRoutes = require("./controller/movies"),
 	userRoute = require("./controller/user"),
 	indexRoutes = require("./controller/index")
+	favGenreRoutes = require("./controller/favGenre")
+
 
 app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
@@ -55,6 +57,7 @@ app.use(indexRoutes);
 app.use(commentRoutes);
 app.use(movieRoutes);
 app.use(userRoute);
+app.use(favGenreRoutes);
 
 app.listen(3000, function(){
  console.log("App listening on port 3000!");
