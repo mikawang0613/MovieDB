@@ -16,7 +16,7 @@ router.get("/users/:id", middleware.isLoggedIn, (req, res) => {
                 if (err) {
                     req.flash("error", "Something went wrong...");
                     res.redirect("/movies");
-                } else { res.render("profile", { currentUser: foundUser, campgrounds }); }
+                } else { res.render("profile",{user: foundUser, movies: campgrounds})}
             });
         }
     });
