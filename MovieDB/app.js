@@ -7,11 +7,11 @@ var passport=require("passport");
 var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
 var movie=require("./schema/movieSchema");
-var seedDB=require("./seeds");
+// var seedDB=require("./seeds");
 var Comment=require("./schema/commentSchema");
 var User=require("./schema/userSchema")
 
-seedDB();
+// seedDB();
 // mongoose.connect("mongodb://localhost/Yelp_camp",{ useUnifiedTopology: true,  useNewUrlParser: true });
 
 
