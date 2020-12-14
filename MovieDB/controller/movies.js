@@ -3,17 +3,30 @@ var router = express.Router();
 var Movie=require("../schema/movieSchema");
 var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
+const axios = require('axios');
 
+router.get("/movies", function(req,res){
+	res.redirect('/movies/now_playing');
+});
 
 //INDEX - show all movies
-router.get("/movies",function(req,res){
-	Movie.find({},function(err,allCampground){
-		if(err){
-			console.log(err);
-		}else{
-			res.render("index", {movie:allCampground});
-		}
-	});
+router.get("/movies/:tab", function(req,res){
+	axios.get('https://api.themoviedb.org/3/movie/' + req.params.tab + '?api_key=838cc1c9e302f1b74485c014c60dd197&language=en-US')
+	.then((response)=>{
+		res.render("index", {
+		    movie: response.data.results.map(movie => {
+		        return {
+		        	name: movie.title,
+                	image:'https://image.tmdb.org/t/p/w200/' + movie.poster_path,
+                	id: movie.id,
+		        }
+		    }),
+		    tab: req.params.tab,
+		});
+	})
+	.catch((err) => {
+		console.log(err);
+		});
 });
 
 router.post("/movies",middleware.isLoggedIn,function(req,res){
