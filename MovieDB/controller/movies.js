@@ -48,6 +48,36 @@ router.post("/movies",middleware.isLoggedIn,function(req,res){
 		   }
 	});
 });
+//INDEX - show all movies
+router.get("/userCommunity",function(req,res){
+	Movie.find({},function(err,allCampground){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("usersCommunity", {movie:allCampground});
+		}
+	});
+});
+
+router.post("/userCommunity",middleware.isLoggedIn,function(req,res){
+	var name = req.body.name;
+	// var genere =req.body.genere;
+	var image = req.body.image;
+	var description = req.body.description
+	var author={
+		id:req.user._id,
+		username:req.user.username
+	}
+	var newMovie= {name:name,image:image,description:description,author:author};
+	Movie.create(newMovie,function(err,newlyCreated){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(newlyCreated);
+			res.redirect("/userCommunity");
+		}
+	});
+});
 
 router.get("/movie/new",middleware.isLoggedIn,function(req,res){
 	res.render("new.ejs")
