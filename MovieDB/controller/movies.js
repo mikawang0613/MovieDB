@@ -42,8 +42,8 @@ router.get("/movie/new",middleware.isLoggedIn,function(req,res){
 	res.render("new.ejs")
 })
 
-router.get("/movie",function(req,res){
-	res.render("movie.ejs")
+router.get("/detail",function(req,res){
+	res.render("detail.ejs")
 })
 
 router.get("/moviepicked/:id",function(req,res){
@@ -55,13 +55,27 @@ router.get("/moviepicked/:id",function(req,res){
 		}else{
 			console.log("xxxxxxxxxxxxxxx foundMovie:");
 			console.log(foundMovie);
-			res.send(foundMovie.comments);
+			if (!foundMovie) {
+				res.send([]);
+			} else {
+				res.send(foundMovie.comments);
+			}
 	   }
 	});
 	// comments = ApiComment.findById(movieId);
 	// res.send(comments);
 	// res.send("weiran");
 });
+
+router.get("/search/:id",function(req,res){
+	var movie = req.params.id
+	// res.render("searchedMovie",{movies:movie})
+	res.render("searchedMovie", {query:movie});
+})
+
+router.get("/detail/:id",function(req,res){
+	res.render("movie.ejs")
+})
 
 
 //SHOW -show more info about one movie

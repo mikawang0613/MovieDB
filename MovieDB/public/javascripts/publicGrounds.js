@@ -10,6 +10,7 @@ $(document).ready(() => {
 });
 
 function getMovies(searchText){
+	console.log("running getMovies")
 	axios.get('https://api.themoviedb.org/3/search/movie?api_key=838cc1c9e302f1b74485c014c60dd197&language=en-US&query=' + searchText)
 	.then((response)=>{
 		console.log(response);
@@ -35,7 +36,7 @@ function getMovies(searchText){
 
 function movieSelected(id){
 	sessionStorage.setItem('movieId',id);
-	window.location.assign("movie");
+	window.location.assign("detail");
 	return false;
 }
 
@@ -85,14 +86,17 @@ function getMovie(){
 			</div>
 			<p>${movie.overview} </p>
 			</div>
+			<div>
+			<h4> Comments </h4>
 			`
 
 			for(var i = 0; i < comments.length; i++) {
-				output += `<p>${comments[i].text}</p>`
+				output += `<div class ="row apimovie">${i+1}.   <p>${comments[i].text}</p></div>`
 			}
 
 			output += `
 			<a onClick="commentSelected('${movie.title}')" class = "btn btn-primary" href = "#"> Add comment </a>
+			</div>
 			`;
 
 			$('#movie').html(output)

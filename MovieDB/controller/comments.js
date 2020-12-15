@@ -92,22 +92,29 @@ router.delete("/movie/:id/comments/:comment_id",middleware.checkCommentOwnership
 
 router.post("/apicomment/:id/comment",function(req,res){
 	var movieId = req.params.id
-	console.log("xxxxxxxxxxxx post movieId: " + movieId);
-
-	ApiComment.create({_id: movieId}, function(err, apicomment){
-		if(err){
-			console.log(err);
-		} else {
-			//add username and id to comment
-			//comment.author = req.user
-			// comment.author.id = req.user._id;
-			// comment.author.username = req.user.username;
-			//save comment
-			apicomment.comments.push(req.body.comment)
-			apicomment.save();
-			res.redirect('/movie');
+	ApiComment.count({_id:movieId},function(err,count){
+		if(count > 0){
+			ApiComment.update({_id:movieId},{$push:{comments:req.body.comment}}, function(err, num){
+				res.redirect('/movie');
+			})
+		}else{
+			ApiComment.create({_id: movieId}, function(err, apicomment){
+				if(err){
+					console.log(err);
+				} else {
+					//add username and id to comment
+					//comment.author = req.user
+					// comment.author.id = req.user._id;
+					// comment.author.username = req.user.username;
+					//save comment
+					apicomment.comments.push(req.body.comment)
+					apicomment.save();
+					res.redirect('/movie');
+				}
+			 });
 		}
-	 });
+	})
+
 	//res.redirect()
 	
 	// ApiComment.findById(movieid, function(err, comments){
