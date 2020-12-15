@@ -12,11 +12,11 @@ router.get("/users/:id", middleware.isLoggedIn, (req, res) => {
             req.flash("error", "Something went wrong...");
             res.redirect("/movies");
         } else {
-            Campground.find().where("author.id").equals(foundUser._id).exec((err, campgrounds) => {
+            Campground.find().where("author.id").equals(foundUser._id).exec((err, movies) => {
                 if (err) {
                     req.flash("error", "Something went wrong...");
                     res.redirect("/movies");
-                } else { res.render("profile",{user: foundUser, movies: campgrounds})}
+                } else { res.render("profile",{user: foundUser, movies: movies})}
             });
         }
     });
