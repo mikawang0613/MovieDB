@@ -1,0 +1,5 @@
+{  "name": "Node.js Getting Started", 
+    "description": "Final Project",  
+    "repository": "https://github.com/Zhe-Mika-Wang/WebDev/tree/master/MovieDB", 
+    "image": "heroku/nodejs", 
+    "keywords": ["node", "express", "static"]}
