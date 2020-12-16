@@ -28,7 +28,7 @@
 					<p>
 						<em>Submitted by<a href="/profile/<%= movie.author.id %>"><%=movie.author.username%></a></em>
 					</p>
-					<% if(currentUser && movie.author.id.equals(currentUser.id)){ %>
+					<% if((currentUser && movie.author.id.equals(currentUser.id)) || (currentUser && currentUser.isAdmin === true)){ %>
 					<a class="btn btn-warning" href="/movie/<%=movie._id%>/edit">Edit</a>	
 					<form class="delete-form" action="/movie/<%=movie._id%>?_method=DELETE" method="POST">
 						<button class="btn btn-danger">Detele</button>
@@ -65,13 +65,5 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-
 
 <% include partial/footer %>

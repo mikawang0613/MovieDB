@@ -152,7 +152,7 @@ router.get("/movie/:id",function(req,res){
 });
 
 //EDIT
-router.get("/movie/:id/edit",middleware.checkCampgroundOwnership,function(req,res){
+router.get("/movie/:id/edit",function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> edit");
 	Movie.findById(req.params.id,function(err,findCampground){
 		res.render("edit",{movie:findCampground});
@@ -161,7 +161,7 @@ router.get("/movie/:id/edit",middleware.checkCampgroundOwnership,function(req,re
   });
 	
 
-router.put("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
+router.put("/movie/:id",function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> put");
 	Movie.findByIdAndUpdate(req.params.id,req.body.movie,function(err,UpdateCampground){
 		if(err){
@@ -174,7 +174,7 @@ router.put("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
 
 
 //Destroy Campground
-router.delete("/movie/:id",middleware.checkCampgroundOwnership,function(req,res){
+router.delete("/movie/:id", function(req,res){
 	console.log(">>>>>>>>>>>>>>>>>>>>> delete");
 	Movie.findByIdAndRemove(req.params.id,function(err){
 		if(err){
