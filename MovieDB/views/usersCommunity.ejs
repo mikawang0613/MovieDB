@@ -1,0 +1,48 @@
+<% include partial/header %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>
+                Welcome to the Movie Lover Community
+            </h1>
+            <p>
+                View the latest movies added by Movie Lovers!
+            </p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/movie/new">Add new movie</a>
+            </p>
+        </div>
+    </header>
+
+</div>
+
+
+
+<div class = "container">
+    <div class="row">
+        <div class="row text-center" style="display:flex; flex-wrap:wrap;">
+            <% movie.forEach(function(camp){ %>
+                <div class="col-md-3 col-sm-6">
+                    <div class="thumbnail">
+                        <img src= "<%= camp.image%>">
+                        <div class="caption">
+                            <h4>
+                                <%= camp.name %>
+                            </h4>
+
+                        </div>
+                        <p>
+                            <a href="/movie/<%= camp._id %>" class="btn btn-primary">More Info</a>
+                        </p>
+                    </div>
+                </div>
+
+            <% }); %>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+<% include partial/footer %>

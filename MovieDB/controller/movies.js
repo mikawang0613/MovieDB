@@ -5,17 +5,30 @@ var ApiComment = require("../schema/apiSchema");
 var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
 var pickedMovieId = "";
+const axios = require('axios');
 
+router.get("/movies", function(req,res){
+	res.redirect('/movies/now_playing');
+});
 
 //INDEX - show all movies
-router.get("/movies",function(req,res){
-	Movie.find({},function(err,allCampground){
-		if(err){
-			console.log(err);
-		}else{
-			res.render("index", {movie:allCampground});
-		}
-	});
+router.get("/movies/:tab", function(req,res){
+	axios.get('https://api.themoviedb.org/3/movie/' + req.params.tab + '?api_key=838cc1c9e302f1b74485c014c60dd197&language=en-US')
+	.then((response)=>{
+		res.render("index", {
+		    movie: response.data.results.map(movie => {
+		        return {
+		        	name: movie.title,
+                	image:'https://image.tmdb.org/t/p/w200/' + movie.poster_path,
+                	id: movie.id,
+		        }
+		    }),
+		    tab: req.params.tab,
+		});
+	})
+	.catch((err) => {
+		console.log(err);
+		});
 });
 
 router.post("/movies",middleware.isLoggedIn,function(req,res){
@@ -35,6 +48,36 @@ router.post("/movies",middleware.isLoggedIn,function(req,res){
 			   console.log(newlyCreated);
 			   res.redirect("/movies");
 		   }
+	});
+});
+//INDEX - show all movies
+router.get("/userCommunity",function(req,res){
+	Movie.find({},function(err,allCampground){
+		if(err){
+			console.log(err);
+		}else{
+			res.render("usersCommunity", {movie:allCampground});
+		}
+	});
+});
+
+router.post("/userCommunity",middleware.isLoggedIn,function(req,res){
+	var name = req.body.name;
+	// var genere =req.body.genere;
+	var image = req.body.image;
+	var description = req.body.description
+	var author={
+		id:req.user._id,
+		username:req.user.username
+	}
+	var newMovie= {name:name,image:image,description:description,author:author};
+	Movie.create(newMovie,function(err,newlyCreated){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(newlyCreated);
+			res.redirect("/userCommunity");
+		}
 	});
 });
 
