@@ -95,7 +95,7 @@ router.post("/apicomment/:id/comment",function(req,res){
 	ApiComment.count({_id:movieId},function(err,count){
 		if(count > 0){
 			ApiComment.update({_id:movieId},{$push:{comments:req.body.comment}}, function(err, num){
-				res.redirect('/movie');
+				res.redirect('/detail');
 			})
 		}else{
 			ApiComment.create({_id: movieId}, function(err, apicomment){
@@ -109,7 +109,7 @@ router.post("/apicomment/:id/comment",function(req,res){
 					//save comment
 					apicomment.comments.push(req.body.comment)
 					apicomment.save();
-					res.redirect('/movie');
+					res.redirect('/detail');
 				}
 			 });
 		}

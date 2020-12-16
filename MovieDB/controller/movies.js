@@ -62,9 +62,6 @@ router.get("/moviepicked/:id",function(req,res){
 			}
 	   }
 	});
-	// comments = ApiComment.findById(movieId);
-	// res.send(comments);
-	// res.send("weiran");
 });
 
 router.get("/search/:id",function(req,res){
@@ -74,7 +71,7 @@ router.get("/search/:id",function(req,res){
 })
 
 router.get("/detail/:id",function(req,res){
-	res.render("movie.ejs")
+	res.render("detail.ejs")
 })
 
 

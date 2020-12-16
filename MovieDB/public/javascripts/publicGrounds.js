@@ -91,7 +91,8 @@ function getMovie(){
 			`
 
 			for(var i = 0; i < comments.length; i++) {
-				output += `<div class ="row apimovie">${i+1}.   <p>${comments[i].text}</p></div>`
+				output += `<div class ="row apimovie">
+				${i+1}.   <p>${comments[i].text}</p></div>`
 			}
 
 			output += `
