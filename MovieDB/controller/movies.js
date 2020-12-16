@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 var Movie=require("../schema/movieSchema");
+var ApiComment = require("../schema/apiSchema");
 var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
+var pickedMovieId = "";
 const axios = require('axios');
 
 router.get("/movies", function(req,res){
@@ -83,8 +85,36 @@ router.get("/movie/new",middleware.isLoggedIn,function(req,res){
 	res.render("new.ejs")
 })
 
-router.get("/movie",function(req,res){
-	res.render("movie.ejs")
+router.get("/detail",function(req,res){
+	res.render("detail.ejs")
+})
+
+router.get("/moviepicked/:id",function(req,res){
+	console.log("xxxxxxxxxxxxxxxxxxx moviepicked:"+req.params.id);
+	pickedMovieId = req.params.id;
+	ApiComment.findById(req.params.id).exec(function(err,foundMovie){
+		if(err){
+			console.log(err);
+		}else{
+			console.log("xxxxxxxxxxxxxxx foundMovie:");
+			console.log(foundMovie);
+			if (!foundMovie) {
+				res.send([]);
+			} else {
+				res.send(foundMovie.comments);
+			}
+	   }
+	});
+});
+
+router.get("/search/:id",function(req,res){
+	var movie = req.params.id
+	// res.render("searchedMovie",{movies:movie})
+	res.render("searchedMovie", {query:movie});
+})
+
+router.get("/detail/:id",function(req,res){
+	res.render("detail.ejs")
 })
 
 
