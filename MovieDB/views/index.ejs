@@ -14,11 +14,9 @@
 				Welcome to the movieDB
 				</h1>
 				<p>
-					View the latest movies
+					Please log in and click the button below to see the recommendations for you
 				</p>
-				<p>
-				  <a class="btn btn-primary btn-lg" href="/movie/new">Add new movie</a>
-				</p>
+				<a href = "/movie/customize">Click</a>
 			</div>
 		</header>
 	   
@@ -56,9 +54,9 @@
       <li class="nav-item">
         <a class="nav-link <%= tab === 'top_rated' ? 'active' : '' %>" href="/movies/top_rated">Top Rated</a>
       </li>
-            <li class="nav-item">
-              <a class="nav-link <%= tab === 'upcoming' ? 'active' : '' %>" href="/movies/upcoming">Upcoming</a>
-            </li>
+		<li class="nav-item">
+			<a class="nav-link <%= tab === 'upcoming' ? 'active' : '' %>" href="/movies/upcoming">Upcoming</a>
+		</li>
     </ul>
   </div>
 </nav>

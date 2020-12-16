@@ -6,6 +6,7 @@ var middleware=require("../middleware/index.js");
 const { render } = require("ejs");
 var pickedMovieId = "";
 const axios = require('axios');
+const movieList =  [{"name":"Comedy","id":"35"},{"name":"Crime","id":"80"},{"name":"Action","id":"28"},{"name":"Romance","id":"10749"},{"name":"Drama","id":"18"},{"name":"Adventure","id":"12"},{"name":"Horror","id":"27"},{"name":"Documentary","id":"99"},{"name":"Animation","id":"16"}]
 
 router.get("/movies", function(req,res){
 	res.redirect('/movies/now_playing');
@@ -30,6 +31,24 @@ router.get("/movies/:tab", function(req,res){
 		console.log(err);
 		});
 });
+
+router.get("/movie/customize",function(req,res){
+	if (req.user){
+		var type = req.user.favoriteGenres;
+		for(var i = 0; i < movieList.length; i++){
+			if (movieList[i].name === type){
+			var cusid = movieList[i].id;
+		}
+	}
+	axios.get("https://api.themoviedb.org/3/discover/movie?api_key=838cc1c9e302f1b74485c014c60dd197&language=en-US&page=1&with_genres=" + cusid)
+	.then((response) => {
+		let movies = response.data.results;
+		console.log(movies);	
+		res.render("recommendation",{recommendations:movies,type})
+		})
+	}
+	
+})
 
 router.post("/movies",middleware.isLoggedIn,function(req,res){
 	var name = req.body.name;
