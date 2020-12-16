@@ -43,7 +43,7 @@ function movieSelected(id){
 function getMovie(){
 	let movieId = sessionStorage.getItem("movieId");
 	let comments;
-	$.get('http://localhost:3000/moviepicked/' + movieId, function(data, status){
+	$.get('https://arcane-tor-97561.herokuapp.com/moviepicked/' + movieId, function(data, status){
 		console.log("xxxxxxxxxxxx data:" + data);
 		comments = data;
 	}).then(() => {
